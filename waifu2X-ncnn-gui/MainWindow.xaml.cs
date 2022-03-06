@@ -50,7 +50,9 @@ namespace waifu2X_ncnn_gui
                 startInfo.UseShellExecute = false;
                 startInfo.FileName = "waifu2x-ncnn-vulkan.exe";
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.Arguments = "-i " + inputPath + " -o " + outputFile + " -n " + denoiseVal + " -s " + scaleVal;
+                startInfo.Arguments = "-i " + '"' + inputPath + '"' + " -o " + '"' + outputFile + '"' + " -n " + denoiseVal + " -s " + scaleVal;
+
+                
 
                 try
                 {
