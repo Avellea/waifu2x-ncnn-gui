@@ -44,13 +44,15 @@ namespace waifu2X_ncnn_gui
                 string outputFile = sfd.FileName;
                 string denoiseVal = denoiseValue.Text;
                 string scaleVal = scaleValue.Text;
+                string modelVal = modelName.Text;
+                string gpuVal = gpuID.Text;
 
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.CreateNoWindow = false;
                 startInfo.UseShellExecute = false;
                 startInfo.FileName = "waifu2x-ncnn-vulkan.exe";
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.Arguments = "-i " + '"' + inputPath + '"' + " -o " + '"' + outputFile + '"' + " -n " + denoiseVal + " -s " + scaleVal;
+                startInfo.Arguments = "-i " + '"' + inputPath + '"' + " -o " + '"' + outputFile + '"' + " -n " + denoiseVal + " -s " + scaleVal + " -m " + modelVal + " -g " + gpuVal;
 
                 
 
