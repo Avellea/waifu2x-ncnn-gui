@@ -1,0 +1,5 @@
+.NET 6.0 and waifu2x-ncnn-vulkan are required for this application to work.
+Please download and install them from the following links.
+
+- .NET 6.0: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+- waifu2x-ncnn-vulkan: https://github.com/nihui/waifu2x-ncnn-vulkan/releases/latest
