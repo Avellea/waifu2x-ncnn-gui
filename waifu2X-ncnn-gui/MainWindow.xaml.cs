@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Configuration;
 using System.Collections.Specialized;
+using Microsoft.Win32;
 using waifu2x_ncnn_gui;
 
 namespace waifu2X_ncnn_gui
@@ -15,21 +16,14 @@ namespace waifu2X_ncnn_gui
     {
         public MainWindow()
         {
-
             InitializeComponent();
-
             waifu2xLocationInput.Text = ConfigHandler.GetWaifu2xLocation();
-
         }
-
 
 
         private void browseButton_Click(object sender, RoutedEventArgs e)
         {
-
-            
-
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "Select an image.";
             ofd.DefaultExt = ".png";
@@ -40,15 +34,12 @@ namespace waifu2X_ncnn_gui
                 inputImagePath.Text = ofd.FileName;
                 beforePreview.Source = new BitmapImage(new Uri(ofd.FileName));
             }
-
         }
+
 
         private void waifu2xLocationBrowse_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "Select an executable.";
             ofd.DefaultExt = ".exe";
@@ -60,48 +51,46 @@ namespace waifu2X_ncnn_gui
                 ConfigHandler.SetWaifu2xLocation(waifu2xLocationInput.Text);
                 //beforePreview.Source = new BitmapImage(new Uri(ofd.FileName));
             }
-
         }
+
 
         private void scaleButton_Click(object sender, RoutedEventArgs e)
         {
-
-            Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
+            SaveFileDialog sfd = new SaveFileDialog();
             if(sfd.ShowDialog() == true)
             {
-                string inputPath = inputImagePath.Text;
-                string outputFile = sfd.FileName;
-                string denoiseVal = denoiseValue.Text;
-                string scaleVal = scaleValue.Text;
-                string modelVal = modelName.Text;
-                string gpuVal = gpuID.Text;
-
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.CreateNoWindow = false;
                 startInfo.UseShellExecute = false;
                 startInfo.FileName = waifu2xLocationInput.Text;
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.Arguments = "-i " + '"' + inputPath + '"' + " -o " + '"' + outputFile + '"' + " -n " + denoiseVal + " -s " + scaleVal + " -m " + modelVal + " -g " + gpuVal;
+                startInfo.Arguments = 
+                    "-i " + '"' + inputImagePath.Text + '"' 
+                    + " -o " + '"' + sfd.FileName + '"' 
+                    + " -n " + denoiseValue.Text
+                    + " -s " + scaleValue.Text
+                    + " -m " + modelName.Text
+                    + " -g " + gpuID.Text;
 
-                
-
-                try
+                if(waifu2xLocationInput.Text == "Waifu2x location not set.")
                 {
-                    using (Process exeProcess = Process.Start(startInfo))
+                    MessageBox.Show("Waifu2x location not set!", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                } 
+                else
+                {
+                    try
                     {
-                        exeProcess.WaitForExit();
+                        using (Process exeProcess = Process.Start(startInfo))
+                        {
+                            exeProcess.WaitForExit();
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+                } 
             }
-
-
-            
-
         }
-
     }
 }
