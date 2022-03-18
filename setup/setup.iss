@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "waifu2x-ncnn-gui"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.1.1"
 #define MyAppPublisher "Avellea"
 #define MyAppURL "https://avellea.is-a.dev/projects/waifu2x-ncnn-gui/index.html"
 #define MyAppExeName "waifu2x-ncnn-gui.exe"
